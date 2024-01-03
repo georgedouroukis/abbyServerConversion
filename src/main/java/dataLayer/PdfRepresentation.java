@@ -1,4 +1,4 @@
-package utils;
+package dataLayer;
 
 import com.google.gson.annotations.Expose;
 
