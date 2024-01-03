@@ -1,8 +1,14 @@
 package dataLayer;
 
+import com.google.gson.annotations.Expose;
+
 public class JobRepresentation {
+	
+	@Expose
 	private String State;
+	@Expose
 	private String Progress;
+	@Expose
 	private String Id;
 	
 	public String getState() {

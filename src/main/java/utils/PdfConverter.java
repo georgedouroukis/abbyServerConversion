@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.http.HttpResponse.BodyHandler;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 
@@ -63,14 +66,45 @@ public class PdfConverter {
 		}
 
 	}
+	
+	public static String getFile(String jobId) throws IOException {
+		
+        String url = baseUrl + "api/jobs/" + jobId + "/result?exclude=PagesInfo";
 
-	public static String getfile(String jobId) {
-		
-		
-		
-		
+        Request request = new Request.Builder()
+  		      .url(url)
+  		      .get()
+  		      .build();
 
-		return "";
+        try (Response response = client.newCall(request).execute()) {
+			JobRepresentation job = gson.fromJson(response.body().string(), JobRepresentation.class);
+			System.out.println("Progress: "+job.getProgress());
+        }
+        return "";
+	}
+
+	public static void waitForJobCompletion(String jobId) {
+		
+		
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        // Schedule the polling task
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                String status = pollJobStatus(jobId);
+                System.out.println("Job status: " + status);
+
+                if ("JS_Complete".equals(status)) {
+                	
+                    getFile(jobId);
+                    scheduler.shutdown();
+ 
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+
 	}
 	
 	public static String pollJobStatus(String jobId) throws IOException {
@@ -83,10 +117,9 @@ public class PdfConverter {
 
         try (Response response = client.newCall(request).execute()) {
 			JobRepresentation job = gson.fromJson(response.body().string(), JobRepresentation.class);
+			System.out.println("Progress: " + job.getProgress());
 			return job.getState();
 			
 		}
-        // Assuming the API returns the status as plain text
-//        return response.getEntity().getContent().toString();
     }
 }
