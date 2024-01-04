@@ -1,33 +1,44 @@
 package dataLayer;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class JobRepresentation {
-	
+
 	@Expose
-	private String State;
+	@SerializedName("State")
+	private String state;
+
 	@Expose
-	private String Progress;
+	@SerializedName("Progress")
+	private String progress;
+
 	@Expose
-	private String Id;
-	
+	@SerializedName("Id")
+	private String id;
+
 	public String getState() {
-		return State;
+		return state;
 	}
+
 	public void setState(String state) {
-		State = state;
+		this.state = state;
 	}
+
 	public String getProgress() {
-		return Progress;
+		return progress;
 	}
+
 	public void setProgress(String progress) {
-		Progress = progress;
+		this.progress = progress;
 	}
+
 	public String getId() {
-		return Id;
+		return id;
 	}
+
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 
 }

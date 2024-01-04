@@ -1,55 +1,65 @@
 package dataLayer;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class PdfRepresentation {
 
 	@Expose
-	private String FileName;
+	@SerializedName("FileName")
+	private String fileName;
 	@Expose
-	private String FileContents;
-	private String OpenPassword;
-	private String OwnerPassword;
-	private String LocationPath;
-
-	public String getFileContents() {
-		return FileContents;
-	}
-
-	public void setFileContents(String fileContents) {
-		FileContents = fileContents;
-	}
+	@SerializedName("FileContents")
+	private String fileContents;
+	
+	@SerializedName("OpenPassword")
+	private String openPassword;
+	
+	@SerializedName("OwnerPassword")
+	private String ownerPassword;
+	
+	@SerializedName("LocationPath")
+	private String locationPath;
 
 	public String getFileName() {
-		return FileName;
+		return fileName;
 	}
 
 	public void setFileName(String fileName) {
-		FileName = fileName;
+		this.fileName = fileName;
+	}
+
+	public String getFileContents() {
+		return fileContents;
+	}
+
+	public void setFileContents(String fileContents) {
+		this.fileContents = fileContents;
 	}
 
 	public String getOpenPassword() {
-		return OpenPassword;
+		return openPassword;
 	}
 
 	public void setOpenPassword(String openPassword) {
-		OpenPassword = openPassword;
+		this.openPassword = openPassword;
 	}
 
 	public String getOwnerPassword() {
-		return OwnerPassword;
+		return ownerPassword;
 	}
 
 	public void setOwnerPassword(String ownerPassword) {
-		OwnerPassword = ownerPassword;
+		this.ownerPassword = ownerPassword;
 	}
 
 	public String getLocationPath() {
-		return LocationPath;
+		return locationPath;
 	}
 
 	public void setLocationPath(String locationPath) {
-		LocationPath = locationPath;
+		this.locationPath = locationPath;
 	}
 
+	
 }
