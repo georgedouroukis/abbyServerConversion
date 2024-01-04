@@ -1,10 +1,9 @@
 package utils;
 
 import java.io.IOException;
-import java.net.URL;
-import java.net.http.HttpResponse.BodyHandler;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -32,13 +31,11 @@ public class PdfConverter {
 	private static Gson gson = new Gson();
 
 
-	public static String createJob() throws IOException {
+	public static String createJob(Path filePath) throws IOException {
 
 		String url = baseUrl + "api/workflows/" + workFlowName + "/input/file";
-		
-		String filePath = "C:\\Users\\George\\Desktop\\__uploads_05_38309905000_aa_2113748s-4.pdf";
-		
-		String fileName = "__uploads_05_38309905000_aa_2113748s-4.pdf";
+				
+		String fileName = filePath.getFileName().toString();
 		
 		PdfRepresentation pdfRepresentation = new PdfRepresentation();
 		
@@ -88,11 +85,11 @@ public class PdfConverter {
 			for (JobDocument jobDocument: result.getJobDocuments()) {
 				OutputDocument outputDocument = jobDocument.getOutputDocumentOfType(htmlFormatType);
 
-				PdfRepresentation file = outputDocument.getFileOfType("htm");
+				PdfRepresentation file = outputDocument.getFileWithExtension("htm");
 
 				System.out.println("Output File: " + file.getFileName());
 				System.out.println("Output Content: " + file.getFileContents());
-				FileHandler.decode("C:\\Users\\George\\Desktop\\" + file.getFileName(), file.getFileContents());
+				FileHandler.decode(Path.of("C:\\Users\\George\\Desktop\\abbyyConversion\\extracted\\" + file.getFileName()), file.getFileContents());
 			}
 		}
 		return "";

@@ -1,16 +1,23 @@
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 
-import dataLayer.PdfRepresentation;
+import utils.FileHandler;
 import utils.PdfConverter;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-
-		String jobId = PdfConverter.createJob();
+		List<Path> files = FileHandler.iterateFiles(Path.of("C:\\Users\\George\\Desktop\\abbyyConversion"));
 		
-		PdfConverter.waitForJobCompletion(jobId);
+		
+		for (Path path: files) {
+			String jobId = PdfConverter.createJob(path);
+			
+			PdfConverter.waitForJobCompletion(jobId);
+		}
+		
 		
 	}
 

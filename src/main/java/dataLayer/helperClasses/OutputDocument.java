@@ -24,7 +24,7 @@ public class OutputDocument {
 	@SerializedName("Id")
 	private String id;
 
-	public PdfRepresentation getFileOfType(String extension) {
+	public PdfRepresentation getFileWithExtension(String extension) {
 		for (PdfRepresentation file : files) {
 			if (FileHandler.getExtension(file.getFileName()).equals(extension)) {
 				return file;
