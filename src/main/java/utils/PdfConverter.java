@@ -3,7 +3,6 @@ package utils;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -87,9 +86,10 @@ public class PdfConverter {
 
 				PdfRepresentation file = outputDocument.getFileWithExtension("htm");
 
-				System.out.println("Output File: " + file.getFileName());
+				Path fileName = Path.of(file.getFileName()).getFileName(); //to cut the parent folder
+				System.out.println("Output File: " + fileName);
 				System.out.println("Output Content: " + file.getFileContents());
-				FileHandler.decode(Path.of("C:\\Users\\George\\Desktop\\abbyyConversion\\extracted\\" + file.getFileName()), file.getFileContents());
+				FileHandler.decode(Path.of("C:\\Users\\George\\Desktop\\abbyyConversion\\extracted\\" + fileName), file.getFileContents());
 			}
 		}
 		return "";
@@ -136,4 +136,5 @@ public class PdfConverter {
 			
 		}
     }
+	private PdfConverter() {}
 }
